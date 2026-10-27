@@ -168,6 +168,7 @@ svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-widt
 .preview .tl div { display: grid; grid-template-columns: 56px 1fr; gap: 12px; }
 .preview .tl b { font: 600 13px/1.9 var(--code); color: var(--num); }
 .preview ol { padding-left: 20px; margin: 0; }
+.preview code { font: 13px var(--code); background: var(--chrome); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
 .preview blockquote { margin: 0; padding: 4px 16px; border-left: 3px solid var(--line); color: var(--muted); }
 
 /* welcome (no tabs open) */
@@ -326,12 +327,14 @@ svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-widt
         <button data-cmd="open:about" type="button">about.md</button>
         <button data-cmd="open:projects" type="button">projects.json</button>
         <button data-cmd="open:contact" type="button">contact.ts</button>
+        <button data-cmd="open:readme" type="button">README.md</button>
       </div></div>
       <div class="menu"><button type="button">Run</button><div class="dropdown">
         <button data-cmd="run" type="button">Run Current File <kbd>F5</kbd></button>
         <button data-cmd="runAll" type="button">Run All Files</button>
       </div></div>
       <div class="menu"><button type="button">Help</button><div class="dropdown">
+        <button data-cmd="open:readme" type="button">Read the README</button>
         <button data-cmd="shortcuts" type="button">Keyboard Shortcuts</button>
         <button data-cmd="welcome" type="button">Welcome</button>
         <button data-cmd="open:about" type="button">About the Author</button>
@@ -400,6 +403,7 @@ svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-widt
     <button type="button" data-cmd="open:about">→ about.md</button>
     <button type="button" data-cmd="open:projects">→ projects.json</button>
     <button type="button" data-cmd="open:contact">→ contact.ts</button>
+    <button type="button" data-cmd="open:readme">→ README.md</button>
   </div>
   <div class="grid">
     <kbd>Ctrl+P</kbd><span>Go to file or command</span>
@@ -558,6 +562,60 @@ See everything in <span class="lnk" data-cmd="open:projects">[projects.json](./p
 }</pre>
 </article>
 
+<!-- ============ README ============ -->
+<article class="doc" id="doc-readme">
+<pre class="code"><span class="h1"># README.md</span>
+
+This webpage pays homage to the programming that is behind
+most modern websites. This design is no accident: it is
+purposefully designed like this.
+
+<span class="h2">## What's inside</span>
+
+It is split into Index, About, Projects, and Contact.
+
+<span class="m">-</span> <span class="lnk" data-cmd="open:home">**index.tsx**</span>     → Index is the home page; the overview of
+                     everything this website has.
+<span class="m">-</span> <span class="lnk" data-cmd="open:about">**about.md**</span>      → About has everything about me and a
+                     little something for the projects I've made.
+<span class="m">-</span> <span class="lnk" data-cmd="open:projects">**projects.json**</span> → Projects is a more detailed explanation
+                     of each project, and it talks about
+                     everything related to said project.
+<span class="m">-</span> <span class="lnk" data-cmd="open:contact">**contact.ts**</span>    → Contact has a list of contacts and a
+                     little form where someone could message
+                     me directly.
+
+<span class="h2">## Try it</span>
+
+Aside from the contact form, many other parts of the website
+are interactable. Try running commands in the command terminal:
+
+<span class="m">```sh</span>
+<span class="lnk" data-sh="help">help</span>        <span class="c"># every command</span>
+<span class="lnk" data-sh="neofetch">neofetch</span>    <span class="c"># the short version of me</span>
+<span class="lnk" data-sh="git log">git log</span>     <span class="c"># project history</span>
+<span class="lnk" data-sh="run projects.json">run projects.json</span>
+<span class="m">```</span>
+<span class="c">&lt;!-- click a command above to run it --&gt;</span></pre>
+</article>
+
+<article class="doc" id="doc-readme-preview">
+<div class="preview">
+  <h1>README</h1>
+  <p>This webpage pays homage to the programming that is behind most modern websites. This design is no accident: it is purposefully designed like this.</p>
+  <h2>What's inside</h2>
+  <p>It is split into Index, About, Projects, and Contact.</p>
+  <div class="tl">
+    <div><b>index</b><span><strong>Index</strong> is the home page; the overview of everything this website has.</span></div>
+    <div><b>about</b><span><strong>About</strong> has everything about me and a little something for the projects I've made.</span></div>
+    <div><b>proj</b><span><strong>Projects</strong> is a more detailed explanation of each project, and it talks about everything related to said project.</span></div>
+    <div><b>contact</b><span><strong>Contact</strong> has a list of contacts and a little form where someone could message me directly.</span></div>
+  </div>
+  <h2>Try it</h2>
+  <p>Aside from the contact form, many other parts of the website are interactable. Try running commands in the command terminal, like <code>help</code>, <code>neofetch</code> or <code>git log</code>.</p>
+</div>
+</article>
+
 <!-- ============ CONTACT ============ -->
 <article class="doc" id="doc-contact">
 <div class="code" id="contactCode">
@@ -662,7 +720,9 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
     about:    { file: 'about.md',      ico: 'md',   label: 'MD',  lang: 'Markdown',         start: 1 },
     projects: { file: 'projects.json', ico: 'json', label: '{}',  lang: 'JSON',             start: 5 },
     contact:  { file: 'contact.ts',    ico: 'tsx',  label: 'TS',  lang: 'TypeScript',       start: 8 },
+    readme:   { file: 'README.md',     ico: 'md',   label: 'MD',  lang: 'Markdown',         start: 1 },
   };
+  const hasPreview = k => !!document.getElementById('doc-' + k + '-preview');
   const icon = k => `<span class="ico ${FILES[k].ico}">${FILES[k].label}</span>`;
 
   /* ---------- line numbering + folding ---------- */
@@ -720,12 +780,13 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
   const OUTLINE = {
     home: [['Home()', 'function'], ['now', 'const now'], ['languages', 'const languages'], ['navigate', 'navigate(']],
     about: [['About me', '# About'], ['How I got here', '## How I got'], ['What I build', '## What'], ['How I work', '## How I work']],
+    readme: [['README', '# README'], ["What's inside", "## What's"], ['Try it', '## Try']],
     projects: [['QuickCite', '"QuickCite"'], ['Study Forge', '"Study Forge"'], ["Who's That Alloy?", '"Who\'s That'], ['Back Room Games', '"Back Room Games"']],
     contact: [['links', 'const GITHUB'], ['message', 'const message'], ['send', 'send(message)'], ['sent log', 'sent from this browser']],
   };
 
   /* ---------- tabs / open ---------- */
-  let tabs = ['home', 'about', 'projects', 'contact'];
+  let tabs = ['home', 'about', 'projects', 'contact', 'readme'];
   let current = null;
   let previewOn = false;
 
@@ -738,13 +799,13 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
   function open(key, line) {
     if (!FILES[key]) key = 'home';
     if (!tabs.includes(key)) tabs.push(key);
+    if (key !== current || !hasPreview(key)) previewOn = false;
     current = key;
-    if (key !== 'about') previewOn = false;
     $$('.doc').forEach(d => d.classList.remove('on'));
     $('#welcome').classList.remove('on');
-    const docId = key === 'about' && previewOn ? 'doc-about-preview' : 'doc-' + key;
+    const docId = previewOn ? 'doc-' + key + '-preview' : 'doc-' + key;
     $('#' + docId).classList.add('on');
-    $('#previewBtn').hidden = key !== 'about';
+    $('#previewBtn').hidden = !hasPreview(key);
     $('#previewBtn').classList.toggle('on', previewOn);
     $('#crumb').textContent = 'arnav-wadhwa › ' + FILES[key].file + (previewOn ? ' › preview' : '');
     $('#stLang').textContent = previewOn ? 'Markdown Preview' : FILES[key].lang;
@@ -860,7 +921,7 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
     body.insertBefore(d, promptEl); body.scrollTop = body.scrollHeight;
   }
   function termOpen() { $('#terminal').classList.remove('min'); }
-  const NAMES = { 'index.tsx': 'home', 'about.md': 'about', 'projects.json': 'projects', 'contact.ts': 'contact', home: 'home', about: 'about', projects: 'projects', contact: 'contact' };
+  const NAMES = { 'index.tsx': 'home', 'about.md': 'about', 'projects.json': 'projects', 'contact.ts': 'contact', 'README.md': 'readme', 'readme.md': 'readme', readme: 'readme', home: 'home', about: 'about', projects: 'projects', contact: 'contact' };
   const CMDS = ['help', 'ls', 'open', 'cat', 'whoami', 'contact', 'git', 'run', 'theme', 'clear', 'neofetch', 'date', 'exit'];
   function sh(raw) {
     const cmd = raw.trim(); if (!cmd) return;
@@ -916,12 +977,13 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
     k = k || current; if (!k) { toast('Open a file to run it.'); return; }
     termOpen();
     const f = FILES[k].file;
-    const label = { home: `tsc ${f} && node index.js`, about: `glow ${f}`, projects: `jq '.projects[].name' ${f}`, contact: `tsc ${f} && node contact.js` }[k];
+    const label = { home: `tsc ${f} && node index.js`, about: `glow ${f}`, projects: `jq '.projects[].name' ${f}`, contact: `tsc ${f} && node contact.js`, readme: `glow ${f}` }[k];
     const res = {
       home: `<span class="ok">✓</span> compiled 1 file in 0.31s\nrendering &lt;Home /&gt; … <span class="ok">done</span>\nHi, I'm Arnav Wadhwa. I build tools that help you study.`,
       about: `<span class="ok">✓</span> rendered about.md (4 sections)\ntip: press <b>Preview</b> to read it as a page`,
       projects: `"QuickCite"\n"Study Forge"\n"Who's That Alloy?"\n"Back Room Games"\n<span class="ok">✓</span> 4 projects · 4 live links`,
       contact: contactOut() + `\n\nfill in <b>message</b> in contact.ts and press <b>Send message</b>.`,
+      readme: `<span class="ok">✓</span> rendered README.md (3 sections)\ntip: press <b>Preview</b> to read it as a page`,
     }[k];
     print(res, label);
     if (k === 'about' && !fromShell && !previewOn) { /* leave preview to the user */ }
@@ -1025,7 +1087,7 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
       case 'theme': return cycleTheme();
       case 'zen': return toggleZen();
       case 'copyEmail': return copyEmail();
-      case 'preview': if (current !== 'about') open('about'); previewOn = !previewOn; return open('about');
+      case 'preview': { const k = current && hasPreview(current) ? current : 'about'; if (current !== k) open(k); previewOn = !previewOn; return open(k); }
       case 'closeTab': return closeTab();
       case 'closeAll': tabs = []; return showWelcome();
       case 'welcome': return showWelcome();
@@ -1048,7 +1110,9 @@ const WEB3FORMS_ACCESS_KEY = "18568331-27ff-4f76-9ca2-414eee43e3c3";
     const tab = e.target.closest('[data-tab]');
     if (tab) return open(tab.dataset.tab);
     const go = e.target.closest('[data-goto]');
-    if (go) { const i = go.dataset.goto.indexOf(':'); const k = go.dataset.goto.slice(0, i), l = go.dataset.goto.slice(i + 1); if (k === 'about') previewOn = false; return open(k, /^\d+$/.test(l) ? +l : findLine(k, l)); }
+    if (go) { const i = go.dataset.goto.indexOf(':'); const k = go.dataset.goto.slice(0, i), l = go.dataset.goto.slice(i + 1); previewOn = false; return open(k, /^\d+$/.test(l) ? +l : findLine(k, l)); }
+    const shc = e.target.closest('[data-sh]');
+    if (shc) { termOpen(); return sh(shc.dataset.sh); }
     const ext = e.target.closest('[data-ext]');
     if (ext) return toggleExt(ext.dataset.ext);
     const pi = e.target.closest('[data-pi]');
